@@ -18,7 +18,15 @@
 //     return $router->app->version();
 // });
 
-$router->get('/', [
-    'as'    => 'clarifai',
-    'uses'  => 'ClarifaiController@index'
-]);
+$router->get('/', function () use ($router) {
+    return $router->app->version();
+});
+
+$router->post("/register", "AuthController@register");
+$router->post("/login", "AuthController@login");
+
+$router->group(['middleware' => 'login'], function () use ($router) {
+    $router->get("/user", "UserController@index");
+
+    $router->get('/', "ClarifaiController@index");
+});
