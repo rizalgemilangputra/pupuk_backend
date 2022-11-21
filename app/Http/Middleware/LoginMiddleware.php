@@ -15,8 +15,8 @@ class LoginMiddleware {
      */
     public function handle($request, Closure $next)
     {
-        if ($request->input('token')) {
-            $check =  User::where('token', $request->input('token'))->first();
+        if ($request->header('X-Auth-Token')) {
+            $check =  User::where('token', $request->header('X-Auth-Token'))->first();
 
             if (!$check) {
                 return response('Invalid Token.', 401);
