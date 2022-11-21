@@ -10,5 +10,6 @@ class RunArtisanController extends Controller
     public function artisanMigrate(Request $request)
     {
         Artisan::call($request->command);
+        echo 'success';
     }
 }
