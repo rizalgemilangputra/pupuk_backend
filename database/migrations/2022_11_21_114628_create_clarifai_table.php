@@ -17,7 +17,7 @@ class CreateClarifaiTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('id_tanaman')->unsigned();
             $table->string('hex', 50);
-            $table->string('nama', 50);
+            $table->string('warna', 50);
             $table->float('nilai');
             $table->timestamps();
         });

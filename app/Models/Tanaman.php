@@ -22,7 +22,7 @@ class Tanaman extends Model
      * @var array
      */
     protected $fillable = [
-        'umur'
+        'id_user', 'umur', 'id_pupuk', 'gambar'
     ];
 
     public function pupuk()
