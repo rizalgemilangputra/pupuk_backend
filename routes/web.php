@@ -24,12 +24,12 @@ $router->get('/', function () use ($router) {
 
 $router->post("/register", "AuthController@register");
 $router->post("/login", "AuthController@login");
-$router->post('/run-artisan', "RunArtisanController@artisanMigrate");
 $router->group(['middleware' => 'login'], function () use ($router) {
     $router->get("/plants", "TanamanController@listTanaman");
 
     $router->get('/', "ClarifaiController@index");
 
 
-
+    // run artisan command
+    $router->post('/run-artisan', "RunArtisanController@artisanMigrate");
 });
