@@ -27,6 +27,7 @@ $router->post("/login", "AuthController@login");
 $router->group(['middleware' => 'login'], function () use ($router) {
     $router->get("/plants", "TanamanController@listTanaman");
     $router->post("/plant", "TanamanController@saveTanaman");
+    $router->post("/delete-plant", "TanamanController@deleteTanaman");
 
     $router->get('/', "ClarifaiController@index");
 

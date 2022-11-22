@@ -27,7 +27,6 @@ class TanamanController extends Controller
                     ->join('pupuk', 'pupuk.id', '=', 'tanaman.id_pupuk')
                     ->select('tanaman.id', 'tanaman.umur', 'pupuk.nama', 'pupuk.keterangan', 'tanaman.updated_at', 'tanaman.gambar')
                     ->get();
-
         $data = [];
         foreach ($plants as $plant) {
             $data[]=[
@@ -45,15 +44,12 @@ class TanamanController extends Controller
 
     public function saveTanaman(Request $request)
     {
-        $umur  = 12;
+        $umur  = $request->umur;
         $image = $request->gambar;
         $folderPath = "images/";
 
-        $image_parts = explode(";base64,", $image);
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1], true);
-        $file = $folderPath . uniqid() . '.'.$image_type;
+        $image_base64 = base64_decode($image, true);
+        $file = $folderPath . uniqid() . '.jpeg';
         Storage::put($file, $image_base64);
 
         $model = Tanaman::create([
@@ -65,7 +61,7 @@ class TanamanController extends Controller
 
         Log::info(storage_path('app/'.$file));
 
-        $res = Clarifai::getData(storage_path('app/'.$file));
+        $res = Clarifai::getData('https://sawitindonesia.com/wp-content/uploads/2020/07/Culvularia-pdf-5-scaled.jpg');
         $clarifai = [];
         $time = date('Y-m-d h:m:s');
         foreach ($res as $color) {
@@ -81,9 +77,23 @@ class TanamanController extends Controller
         Clarifai::insert($clarifai);
 
         $response = [
-            'code'    => 200,
+            'code'    => 201,
             'message' => 'success add tanaman'
         ];
+        return response()->json($response);
+    }
+
+    public function deleteTanaman(Request $request)
+    {
+        $id = $request->id;
+
+        Tanaman::where('id', $id)->where('id_user', $this->user->id)->delete();
+
+        $response = [
+            'code'    => 201,
+            'message' => 'success delete plant'
+        ];
+
         return response()->json($response);
     }
 }

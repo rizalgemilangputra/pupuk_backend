@@ -10,8 +10,8 @@ class AuthController extends Controller {
     public function register(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required|unique:users|max:255',
-            'password' => 'required|min:6'
+            'email' => 'required',
+            'password' => 'required'
         ]);
 
         $email = $request->input("email");
@@ -24,6 +24,13 @@ class AuthController extends Controller {
             "password" => $hashPwd
         ];
 
+        if (User::where('email', $email)->exists()) {
+            $response = [
+                "message" => "username is exist",
+                "code"    => 422,
+            ];
+            return response()->json($response);
+        }
 
 
         if (User::create($data)) {
@@ -45,7 +52,7 @@ class AuthController extends Controller {
     {
         $this->validate($request, [
             'email' => 'required',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ]);
 
         $email = $request->input("email");
