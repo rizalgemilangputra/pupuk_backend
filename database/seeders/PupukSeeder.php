@@ -17,31 +17,31 @@ class PupukSeeder extends Seeder
         $time = date('Y-m-d');
         $data = [
             [
-                'nama'          => 'Pupuk 1',
+                'nama'          => 'Pupuk Organik Bokashi',
                 'keterangan'    => 'Keterangan 1',
                 'created_at'    => $time,
                 'updated_at'    => $time,
             ],
             [
-                'nama'          => 'Pupuk 2',
+                'nama'          => 'Pupuk Fosfor (Phospat)',
                 'keterangan'    => 'Keterangan 2',
                 'created_at'    => $time,
                 'updated_at'    => $time,
             ],
             [
-                'nama'          => 'Pupuk 3',
+                'nama'          => 'Pupuk Kalium',
                 'keterangan'    => 'Keterangan 3',
                 'created_at'    => $time,
                 'updated_at'    => $time,
             ],
             [
-                'nama'          => 'Pupuk 4',
+                'nama'          => 'Pupuk Mikro Plant Activator',
                 'keterangan'    => 'Keterangan 4',
                 'created_at'    => $time,
                 'updated_at'    => $time,
             ],
             [
-                'nama'          => 'Pupuk 5',
+                'nama'          => 'ZPT (Zat Pengatur Tumbuh)',
                 'keterangan'    => 'Keterangan 5',
                 'created_at'    => $time,
                 'updated_at'    => $time,
