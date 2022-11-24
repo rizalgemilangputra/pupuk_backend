@@ -24,6 +24,7 @@ $router->get('/', function () use ($router) {
 
 $router->post("/register", "AuthController@register");
 $router->post("/login", "AuthController@login");
+$router->get("/cek-token", "AuthController@cekToken");
 $router->group(['middleware' => 'login'], function () use ($router) {
     $router->get("/plants", "TanamanController@listTanaman");
     $router->post("/plant", "TanamanController@saveTanaman");

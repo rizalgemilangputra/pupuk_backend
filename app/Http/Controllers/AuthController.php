@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -7,7 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
-class AuthController extends Controller {
+class AuthController extends Controller
+{
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -59,17 +61,21 @@ class AuthController extends Controller {
         }
 
         if (Hash::check($password, $user->password)) {
-            $newtoken  = Str::random(80);
+            if (!$user->token) {
+                $newtoken  = Str::random(80);
 
-            $user->update([
-                'token' => $newtoken
-            ]);
+                $user->update([
+                    'token' => $newtoken
+                ]);
+            }
+
+            $user = User::where("email", $email)->first();
 
             $response = [
                 "message" => "login_success",
                 "code"    => 200,
                 "result"  => [
-                    "token" => $newtoken,
+                    "token" => $user->token,
                 ]
             ];
         } else {
@@ -83,5 +89,22 @@ class AuthController extends Controller {
         }
 
         return response()->json($response, $response['code']);
+    }
+
+    public function cekToken(Request $request)
+    {
+        $token = $request->token;
+        $check = User::where('token', $token)->exists();
+        if ($check) {
+            $response = [
+                'code' => 200,
+            ];
+            return response()->json($response);
+        } else {
+            $response = [
+                'code' => 401,
+            ];
+            return response()->json($response);
+        }
     }
 }
