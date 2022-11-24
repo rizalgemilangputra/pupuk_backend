@@ -35,7 +35,7 @@ class TanamanController extends Controller
                 'nama_pupuk'    => $plant->nama,
                 'keterangan'    => $plant->keterangan,
                 'updated_at'    => Carbon::parse($plant->updated_at)->format('d-m-Y'),
-                'gambar'        => $plant->gambar,
+                'gambar'        => Url::asset('upload/images/'.$plant->gambar),
             ];
         }
 
@@ -46,20 +46,25 @@ class TanamanController extends Controller
     {
         $umur  = $request->umur;
         $image = $request->gambar;
-        $folderPath = "images/";
+        $path = "upload/images/";
 
         $image_base64 = base64_decode($image, true);
-        $file = $folderPath . uniqid() . '.jpeg';
-        Storage::put($file, $image_base64);
+        $name_file = uniqid() . '.jpeg';
+
+        if (!file_exists(public_path($path))) {
+            mkdir(public_path($path), 0777, true);
+        }
+        file_put_contents(public_path($path).'/'.$name_file, $image_base64);
+
+
+        Tanaman::cropImage(public_path($path).'/'.$name_file);
 
         $model = Tanaman::create([
             'id_user'   => $this->user->id,
             'umur'      => $umur,
             'id_pupuk'  => 1,
-            'gambar'    => $file
+            'gambar'    => $name_file
         ]);
-
-        Log::info(storage_path('app/'.$file));
 
         $res = Clarifai::getData('https://sawitindonesia.com/wp-content/uploads/2020/07/Culvularia-pdf-5-scaled.jpg');
         $clarifai = [];
