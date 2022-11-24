@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class AuthController extends Controller {
     public function register(Request $request)
     {
         $this->validate($request, [
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|unique:users',
+            'password' => 'required|min:6'
         ]);
 
         $email = $request->input("email");
@@ -24,24 +25,10 @@ class AuthController extends Controller {
             "password" => $hashPwd
         ];
 
-        if (User::where('email', $email)->exists()) {
-            $response = [
-                "message" => "username is exist",
-                "code"    => 422,
-            ];
-            return response()->json($response);
-        }
-
-
         if (User::create($data)) {
             $response = [
                 "message" => "register_success",
                 "code"    => 201,
-            ];
-        } else {
-            $response = [
-                "message" => "vailed_regiser",
-                "code"   => 404,
             ];
         }
 
@@ -52,7 +39,7 @@ class AuthController extends Controller {
     {
         $this->validate($request, [
             'email' => 'required',
-            'password' => 'required'
+            'password' => 'required|min:6'
         ]);
 
         $email = $request->input("email");
@@ -61,14 +48,14 @@ class AuthController extends Controller {
         $user = User::where("email", $email)->first();
 
         if (!$user) {
-            $out = [
+            $response = [
                 "message" => "login_vailed",
                 "code"    => 401,
                 "result"  => [
                     "token" => null,
                 ]
             ];
-            return response()->json($out, $out['code']);
+            return response()->json($response, $response['code']);
         }
 
         if (Hash::check($password, $user->password)) {
