@@ -25,6 +25,7 @@ class TanamanController extends Controller
     {
         $plants = Tanaman::where('id_user', $this->user->id)
                     ->join('pupuk', 'pupuk.id', '=', 'tanaman.id_pupuk')
+                    ->where('tanaman.is_deleted', 0)
                     ->select('tanaman.id', 'tanaman.umur', 'pupuk.nama', 'pupuk.keterangan', 'tanaman.updated_at', 'tanaman.gambar')
                     ->get();
         $data = [];
@@ -66,7 +67,10 @@ class TanamanController extends Controller
             'gambar'    => $name_file
         ]);
 
-        $res = Clarifai::getData('https://sawitindonesia.com/wp-content/uploads/2020/07/Culvularia-pdf-5-scaled.jpg');
+        // $local_link_image = Url::asset('upload/images/'.$name_file);
+        $local_link_image = 'https://sawitindonesia.com/wp-content/uploads/2020/07/Culvularia-pdf-5-scaled.jpg';
+
+        $res = Clarifai::getData($local_link_image);
         $clarifai = [];
         $time = date('Y-m-d h:m:s');
         foreach ($res as $color) {
@@ -92,7 +96,10 @@ class TanamanController extends Controller
     {
         $id = $request->id;
 
-        Tanaman::where('id', $id)->where('id_user', $this->user->id)->delete();
+        $plant = Tanaman::where('id', $id)->where('id_user', $this->user->id)->first();
+        if ($plant) {
+            $plant->update(['is_deleted' => 1]);
+        }
 
         $response = [
             'code'    => 201,
