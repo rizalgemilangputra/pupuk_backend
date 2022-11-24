@@ -20,6 +20,8 @@ class CreateClarifaiTable extends Migration
             $table->string('warna', 50);
             $table->float('nilai');
             $table->timestamps();
+
+            $table->foreign('id_tanaman')->references('id')->on('tanaman')->cascadeOnDelete();
         });
     }
 
