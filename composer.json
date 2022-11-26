@@ -9,7 +9,8 @@
         "clarifai/clarifai-php-grpc": "^8.9",
         "laravel/lumen-framework": "^8.3.1",
         "league/flysystem": " ~1.0",
-        "ext-gd":"*"
+        "ext-gd":"*",
+        "ext-grpc":"*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
