@@ -8,7 +8,8 @@
         "php": "^7.3|^8.0",
         "clarifai/clarifai-php-grpc": "^8.9",
         "laravel/lumen-framework": "^8.3.1",
-        "league/flysystem": " ~1.0"
+        "league/flysystem": " ~1.0",
+        "gd": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
