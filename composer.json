@@ -6,11 +6,11 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "ext-gd": "*",
         "clarifai/clarifai-php-grpc": "^8.9",
+        "grpc/grpc": "*",
         "laravel/lumen-framework": "^8.3.1",
-        "league/flysystem": " ~1.0",
-        "ext-gd":"*",
-        "grpc/grpc": "^1.25"
+        "league/flysystem": " ~1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
