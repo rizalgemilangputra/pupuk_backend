@@ -61,10 +61,11 @@ class TanamanController extends Controller
         Tanaman::cropImage(public_path($path).'/'.$name_file);
 
         $model = Tanaman::create([
-            'id_user'   => $this->user->id,
-            'umur'      => $umur,
-            'id_pupuk'  => 1,
-            'gambar'    => $name_file
+            'id_user'    => $this->user->id,
+            'umur'       => $umur,
+            'id_pupuk'   => 1,
+            'gambar'     => $name_file,
+            'is_deleted' => 0,
         ]);
 
         $local_link_image = Url::asset('upload/images/'.$name_file);
