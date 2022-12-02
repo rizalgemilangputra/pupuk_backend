@@ -68,23 +68,23 @@ class TanamanController extends Controller
             'is_deleted' => 0,
         ]);
 
-        // $local_link_image = Url::asset('upload/images/'.$name_file);
+        $local_link_image = Url::asset('upload/images/'.$name_file);
         // $local_link_image = 'https://sawitindonesia.com/wp-content/uploads/2020/07/Culvularia-pdf-5-scaled.jpg';
 
-        // $res = Clarifai::getData($local_link_image);
-        // $clarifai = [];
-        // $time = date('Y-m-d h:m:s');
-        // foreach ($res as $color) {
-        //     $clarifai[]=[
-        //         'id_tanaman' => $model->id,
-        //         'hex'        => $color->getW3c()->getHex(),
-        //         'warna'      => $color->getW3c()->getName(),
-        //         'nilai'      => $color->getValue(),
-        //         'updated_at' => $time,
-        //         'created_at' => $time
-        //     ];
-        // }
-        // Clarifai::insert($clarifai);
+        $res = Clarifai::getData($local_link_image);
+        $clarifai = [];
+        $time = date('Y-m-d h:m:s');
+        foreach ($res as $color) {
+            $clarifai[]=[
+                'id_tanaman' => $model->id,
+                'hex'        => $color->getW3c()->getHex(),
+                'warna'      => $color->getW3c()->getName(),
+                'nilai'      => $color->getValue(),
+                'updated_at' => $time,
+                'created_at' => $time
+            ];
+        }
+        Clarifai::insert($clarifai);
 
         $response = [
             'code'    => 201,
