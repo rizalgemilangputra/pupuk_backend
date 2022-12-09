@@ -30,6 +30,8 @@ class TanamanController extends Controller
                     ->get();
         $data = [];
         foreach ($plants as $plant) {
+            $clarifai = Clarifai::where('id_tanaman', $plant->id)->get()->toArray();
+
             $data[]=[
                 'id'            => $plant->id,
                 'umur'          => $plant->umur,
@@ -37,6 +39,7 @@ class TanamanController extends Controller
                 'keterangan'    => $plant->keterangan,
                 'updated_at'    => Carbon::parse($plant->updated_at)->format('d-m-Y'),
                 'gambar'        => Url::asset('upload/images/'.$plant->gambar),
+                'clarifais'     => $clarifai
             ];
         }
 
