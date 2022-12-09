@@ -22,8 +22,8 @@ class CreateTanamanTable extends Migration
             $table->smallInteger('is_deleted')->default(0);
             $table->timestamps();
 
-            $table->foreign('id_user')->references('id')->on('users')->nullOnDelete();
-            $table->foreign('id_pupuk')->references('id')->on('pupuk')->restrictOnDelete();
+            // $table->foreign('id_user')->references('id')->on('users')->nullOnDelete();
+            // $table->foreign('id_pupuk')->references('id')->on('pupuk')->restrictOnDelete();
         });
     }
 

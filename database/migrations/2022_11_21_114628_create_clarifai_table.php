@@ -21,7 +21,7 @@ class CreateClarifaiTable extends Migration
             $table->float('nilai');
             $table->timestamps();
 
-            $table->foreign('id_tanaman')->references('id')->on('tanaman')->cascadeOnDelete();
+            // $table->foreign('id_tanaman')->references('id')->on('tanaman')->cascadeOnDelete();
         });
     }
 
