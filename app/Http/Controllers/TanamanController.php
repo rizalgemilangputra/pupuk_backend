@@ -67,7 +67,7 @@ class TanamanController extends Controller
         $model = Tanaman::create([
             'id_user'    => $this->user->id,
             'umur'       => $umur,
-            'id_pupuk'   => 1,
+            'id_pupuk'   => rand(1,5),
             'gambar'     => $name_file,
             'is_deleted' => 0,
         ]);
