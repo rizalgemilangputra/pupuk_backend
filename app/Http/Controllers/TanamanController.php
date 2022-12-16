@@ -26,7 +26,7 @@ class TanamanController extends Controller
         $plants = Tanaman::where('id_user', $this->user->id)
                     ->join('pupuk', 'pupuk.id', '=', 'tanaman.id_pupuk')
                     ->where('tanaman.is_deleted', 0)
-                    ->select('tanaman.id', 'tanaman.umur', 'pupuk.nama', 'pupuk.keterangan', 'tanaman.updated_at', 'tanaman.gambar')
+                    ->select('tanaman.id', 'tanaman.umur', 'pupuk.nama', 'pupuk.keterangan', 'tanaman.updated_at', 'tanaman.gambar', 'pupuk.dosis')
                     ->get();
         $data = [];
         foreach ($plants as $plant) {
@@ -36,6 +36,7 @@ class TanamanController extends Controller
                 'id'            => $plant->id,
                 'umur'          => $plant->umur,
                 'nama_pupuk'    => $plant->nama,
+                'dosis'         => $plant->dosis,
                 'keterangan'    => $plant->keterangan,
                 'updated_at'    => Carbon::parse($plant->updated_at)->format('d-m-Y'),
                 'gambar'        => Url::asset('upload/images/'.$plant->gambar),
